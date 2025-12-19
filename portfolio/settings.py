@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import dj_database_url
 
 load_dotenv() 
 
@@ -59,8 +60,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -107,16 +108,15 @@ WSGI_APPLICATION = 'portfolio.wsgi.application'
 #     }
 # }
 
+# Default: local PostgreSQL database
+DEFAULT_DB_URL = "postgres://postgres:0000@localhost:5432/portfolio_db"
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'portfolio_db',
-        'USER': 'postgres',
-        'PASSWORD': '0000', 
-        'HOST': 'localhost', 
-        'PORT': '5432',
-    }
+    "default": dj_database_url.config(
+        default="postgres://postgres:0000@localhost:5432/portfolio_db",
+        conn_max_age=600,
+        ssl_require=not os.getenv("DEBUG", "True") == "True"
+    )
 }
 
 
