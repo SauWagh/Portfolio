@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SAURABH — Portfolio</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" 
+      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'portfolio_app/css/style.css' %}">
+
+<style>
+.login-modal {
+    display: none; 
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 1000px;  
+    background: rgba(11, 11, 11, 0.733);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+
+.login-box {
+    background: var(--glass-bg);
+    width: 30%;
+    padding: 35px;
+    border-radius: 12px;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.close {
+    float: right;
+    font-size: 25px;
+    cursor: pointer;
+}
+.login-input::placeholder {
+  color: rgba(255,255,255,0.7);
+}
+
+/* Button styling */
+.login-submit {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.2); /* glass effect */
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.login-submit:hover {
+  background: rgba(255,255,255,0.4);
+  color: #000;
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <a class="navbar-brand font-weight-bold" href="#">SAURABH WAGHMARE</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMain">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navMain">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+      <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+      <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+    </ul>
+
+      <div class="form-inline my-2 my-lg-0">
+
+<div id="loginModal" class="login-modal">
+  <div class="login-box">
+    <span class="close" onclick="closeLogin()">&times;</span>
+
+    <h2>Login</h2>
+
+    <form method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
+
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+
+      <button type="submit" class="login-submit">Log In</button>
+
+      {% if login_error %}
+        <p class="error">{{ login_error }}</p>
+      {% endif %}
+    </form>
+  </div>
+</div>
+
+<a class="btn btn-sm login-btn" href="#" onclick="openLogin()">Log In</a>
+
+
+        <div class="dropdown">
+          <a href="javascript:void(0)" class="dropbtn">Contact &#9662;</a>
+          <div class="dropdown-content">
+            <a href="https://github.com/SauWagh/" target="_blank" class="target">GitHub</a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=saurabhwaghamare@gmail.com">Mail</a>
+            <a href="https://linkedin.com/in/saurabh-waghamre-3a4412245" target="_blank">LinkedIn</a>
+          </div>
+        </div>
+
+      </div>
+
+  </div>
+</nav>
+
+<!-- Background bubbles -->
+<div class="background-bubbles" aria-hidden="true">
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+</div>
+
+<!-- Mouse tail dots (created by script) -->
+<!-- Dots added via JS -->
+
+<!-- Page content container -->
+<div class="container" style="padding-top:90px; padding-bottom:40px;">
+
+  <!-- HERO / GLASS CARD -->
+  <div class="glass hero">
+    <div class="hero-left">
+      <h1>Full Stack Developer & AI/ML Engineer</h1>
+      <p class="lead">I build scalable web apps and intelligent systems using Django, React, Python, and modern ML tools. I love creating clean UIs and deploying models into production.</p>
+
+      <div style="margin-top:14px;">
+        <a class="btn btn-outline-light mr-2" href="#projects">View Projects</a>
+        <a class="btn" style="background:var(--accent); color:white" href="#skills">See Skills</a>
+      </div>
+
+      <div class="mt-3 social">
+        <a href="https://github.com/SauWagh/"><img src="{% static 'portfolio_app/images/icons8-github.gif' %}" alt="github"></a>
+        <a href="#"><img src="{% static 'portfolio_app/images/icons8-linkedin.gif' %}" alt="linkedin"></a>
+        <a href="#"><img src="{% static 'portfolio_app/images/icons8-email.gif' %}" alt="Email"></a>
+      </div>
+    </div>
+
+    <div class="hero-right" style="min-width:260px;">
+      <div class="glass" style="text-align:center;">
+
+          {% if pro and pro.profile_image %}
+              <img src="{{ pro.profile_image.url }}"
+                   alt="profile"
+                   class="profile-img"
+                   style="width:210px;height:210px;border-radius:18px;
+                          object-fit:cover;border:1px solid rgba(255,255,255,0.06);">
+          {% else %}
+              <img src="{% static 'portfolio_app/images/profile-sample.jpg' %}"
+                   alt="profile"
+                   style="width:120px;height:120px;border-radius:18px;
+                          object-fit:cover;border:1px solid rgba(255,255,255,0.06);">
+          {% endif %}
+
+          {% if pro %}
+            <h5 class="mt-2">{{ pro.name }}</h5>
+          {% else %}
+              <h5 class="mt-2">Your Name</h5>
+          {% endif %}
+
+        <p class="meta" style="color:var(--muted); margin-bottom:0px;">Full Stack Developer</p>
+        <p class="meta" style="color:var(--muted); margin-bottom:0px;">AI/ML Engineer</p>
+
+      </div>
+    </div>
+  </div> <!-- /hero -->
+
+  <!-- SKILLS PANEL -->
+<section id="skills-section" style="margin-top: 40px;">
+
+<div class="skills-tabs">
+  <button class="tab-button active" data-category="languages">Languages</button>
+  <button class="tab-button" data-category="frameworks">Frameworks/Libraries</button>
+  <button class="tab-button" data-category="frontend">Frontend Technologies</button>
+  <button class="tab-button" data-category="backend">backend Technologies</button>
+  <button class="tab-button" data-category="databases">Databases</button>
+  <button class="tab-button" data-category="ml/ds">ML/Data Science</button>
+  <!-- <button class="tab-button" data-category="cloud">Cloud/DevOps</button> -->
+  <button class="tab-button" data-category="tools">Tools</button>
+</div>
+
+{% regroup skills by category as groups %}
+
+<div class="skills-panels">
+  {% for g in groups %}
+  <div class="panel {% if g.grouper == 'languages' %}active{% endif %}" data-panel="{{ g.grouper }}">
+    <div class="skill-grid">
+      {% for s in g.list %}
+      <div class="skill-card">
+        {% if s.icon %}
+
+            <img src="{{ s.icon.url }}" alt="{{ s.name }}">
+            <span class="popup-text"><p>{{ s.name }}</p></span>
+
+        {% else %}
+
+            <img src="{% static 'default-icons/default.png' %}" alt="{{ s.name }}">
+            <span class="popup-text"><p>{{ s.name }}</p></span>
+
+        {% endif %}
+
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+</section>
+
+
+
+<!-- PROJECTS PANEL -->
+<section id="projects" style="margin-top:28px;">
+  <div class="glass">
+    <div class="d-flex justify-content-between align-items-center">
+      <h4 style="margin:0;">Projects</h4>
+      <small style="color:var(--muted)">{{ projects|length }} projects</small>
+    </div>
+
+    <div class="projects-grid mt-3">
+      {% for p in projects %}
+      <div class="glass project-card">
+        
+        <!-- Show video first, then first image, then fallback -->
+        {% if p.project_video %}
+          <video class="project-thumb" controls>
+            <source src="{{ p.project_video.url }}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        {% elif p.images.first %}
+          <img class="project-thumb" src="{{ p.images.first.image.url }}" alt="{{ p.project_title }}">
+        {% else %}
+          <img class="project-thumb" src="{% static 'portfolio_app/images/project-fallback.jpg' %}" alt="{{ p.project_title }}">
+        {% endif %}
+
+        <div class="project-info">
+          <h6>{{ p.project_title }}</h6>
+          <div class="meta">{{ p.project_des|truncatechars:120 }}</div>
+
+          <div class="project-actions">
+            {% if p.live_demo %}
+              <a class="btn btn-sm btn-outline-light" href="{{ p.live_demo }}" target="_blank">Live</a>
+            {% endif %}
+            <a class="btn btn-sm" style="background:var(--accent); color:#fff;" href="{% url 'detail' p.id %}">Details</a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+        <p class="mt-3">No projects yet — add some in admin panel.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+
+  <!-- ABOUT -->
+  <section id="about" style="margin-top:28px;">
+    <div class="glass">
+      <h4>About</h4>
+      <p id="about-text" style="color:var(--muted)"><p>
+  Hi, I’m <strong>Saurabh</strong> — a Python/Django Full-Stack Developer who loves building things that 
+  <strong>actually work</strong> and <strong>actually look good</strong>. I turn ideas into fast, scalable, and clean web applications using 
+  <strong>Django, REST APIs, PostgreSQL, SQL, JavaScript</strong>, and modern UI frameworks.
+</p>
+
+<p>
+  But I don’t stop at full-stack development — I also enjoy giving applications a brain .  
+  With <strong>AI & Machine Learning</strong> (Scikit-Learn, Pandas, NumPy, Matplotlib, seaborn), I build smart features like 
+  predictions, automation tools, and data-driven insights that make projects feel more alive.
+</p>
+
+<p>
+  I’m the kind of developer who’ll fix your backend logic, design a smooth UI, optimize the database, and still 
+  have the energy to train an ML model — all in the same sprint.
+</p>
+
+<p>
+  I learn fast, think creatively, and love solving problems with simple, elegant code.  
+  If you’re looking for someone who brings <strong>fresh ideas</strong>, <strong>full-stack skill</strong>, and 
+  <strong>AI-powered thinking</strong>, I’d love to build something amazing with you.
+</p>
+
+<p><strong>Let’s create something impactful.</strong></p>
+</p>
+    </div>
+  </section>
+
+<section id="exp-section" class="exp-wrapper">
+
+    <!-- EXPERIENCE PANEL -->
+    <div class="exp-panel glass">
+        <h3>Experience</h3>
+
+        <div class="exp-grid exp-slider">
+            {% for e in exe %}
+                <div class="exp-card">
+                    <h4>{{ e.compony_name }}</h4>
+                    <p class="exp-des">{{ e.compony_des }}</p>
+                    <p>{{ e.duration }}</p>
+
+                    {% if e.certificate_link %}
+                        <a href="{{ e.certificate_link.url }}" target="_blank" class="exp-link">View Certificate</a>
+                    {% endif %}
+                </div>
+            {% empty %}
+                <p>No experiences added yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- CERTIFICATION PANEL -->
+    <div class="cert-panel glass">
+        <h3>Certifications</h3>
+
+        <div class="cert-grid">
+            {% for c in cer %}
+                <div class="cert-card">
+                    <p>{{ c.certificate_name }}</p>
+                    {% if c.link %}
+                        <a href="{{ c.link }}" target="_blank">View</a>
+                    {% endif %}
+                </div>
+            {% empty %}
+                <p>No certifications added yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+</section>
+
+
+
+<section id="Contact" style="margin-top: 28px;">
+  <div class="glass contact-wrapper">
+
+    <!-- Contact Form -->
+    <div class="contact-box">
+      <h3 class="contact-title">Get in Touch</h3>
+
+        {% if messages %}
+          {% for msg in messages %}
+            <p style="color: green;">{{ msg }}</p>
+          {% endfor %}
+        {% endif %}
+
+      <form method="POST" action="{% url 'send_email' %}" class="contact-form">
+        {% csrf_token %}
+
+        <div class="field">
+          <input type="text" placeholder="Your Name" name="name" required>
+        </div>
+
+        <div class="field">
+          <input type="email" placeholder="your Email" name="email" required>
+        </div>
+
+        <div class="field">
+          <textarea name="message" placeholder="Your Message" required></textarea>
+        </div>
+
+        <button type="submit" class="send-btn">Send Message</button>
+      </form>
+    </div>
+
+    <!-- Right Side (optional resume, socials etc.) -->
+    <!-- Right Side (optional resume, socials etc.) -->
+    <div class="resume-box">
+
+<!-- Right Side (Resume Box) -->
+<div class="inside-box">
+  
+    {% if resume %}
+        <a href="{{ resume.file }}" target="_blank">
+            <button class="view-btn">View Resume</button>
+ <img src="https://cdn-images.zety.com/pages/free_resume_templates_new_6.jpg" alt="" class="bg_img">
+        </a>
+    {% else %}
+        <p>No resume uploaded yet.</p>
+    {% endif %}
+</div>
+
+    </div>
+</section>
+
+
+  <!-- Footer -->
+  <footer class="site-footer mt-4">
+    <div class="glass p-3">
+      © {{ now.year }} Saurabh Waghmare — Built with Django
+    </div>
+  </footer>
+
+</div> <!-- /container -->
+
+<!-- Scripts: bootstrap -->
+<script src="https://code.jquery.com/jquery-3.6.3.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+  <script src="{% static 'portfolio_app/js/script.js' %}"></script>
+  
+</body>
+</html>

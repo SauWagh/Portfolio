@@ -1,0 +1,288 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+
+    <style>
+        body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(180deg, #0a0516, #12021f);
+    min-height: 100vh;
+    color: #fff;
+
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        .project-card {
+            background: rgba(255,255,255,0.05);
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .thumb {
+            width: 240px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-top: 10px;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .section {
+            margin-top: 12px;
+            padding: 10px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #8f44fd;
+            padding: 5px 10px;
+            border-radius: 20px;
+            margin: 4px;
+            font-size: 12px;
+        }
+
+        .icon-img {
+            width: 35px;
+            height: 35px;
+            object-fit: contain;
+            background: #fff;
+            border-radius: 8px;
+            margin: 4px;
+            padding: 3px;
+        }
+
+        a.btn {
+            padding: 6px 12px;
+            background: #444;
+            border-radius: 6px;
+            text-decoration: none;
+            color: white;
+            margin-right: 6px;
+            font-size: 14px;
+        }
+
+        a.btn-danger {
+            background: #e74c3c;
+        }
+        a.btn-edit {
+            background: #3498db;
+        }
+        /* Buttons */
+a.btn {
+    padding: 6px 12px;
+    background: #555;
+    border-radius: 6px;
+    text-decoration: none;
+    color: white;
+    margin-right: 6px;
+    font-size: 13px;
+}
+
+a.btn-edit {
+    background: #3498db;
+}
+
+a.btn-danger {
+    background: #e74c3c;
+}
+
+    </style>
+</head>
+
+<body>
+    <a href="{% url 'add' %}" class="top-link btn">Add Project</a>
+    <a href="{% url 'skill' %}" class="top-link btn">Add Skill</a>
+    <a href="{% url 'add_exp' %}" class="top-link btn">Add Experience</a>
+    <a href="{% url 'add_cer' %}" class="top-link btn">Add Certificate</a>
+
+    <a href="{% url 'home' %}" class="top link btn">Back to home</a>
+
+<h2>All Projects ({{ projects|length }})</h2>
+
+{% for p in projects %}
+<div class="project-card">
+
+    <!-- HEADER -->
+    <div class="project-header">
+        <h3>{{ p.project_title }}</h3>
+
+        <div>
+            <a href="{% url 'update_project' p.id %}" class="btn btn-edit">Update</a>
+            <a href="{% url 'delete_project' p.id %}" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+
+    <!-- THUMBNAIL: video > first image > fallback -->
+    {% if p.project_video %}
+        <video class="thumb" controls>
+            <source src="{{ p.project_video.url }}" type="video/mp4">
+        </video>
+    {% elif p.images.first %}
+        <img class="thumb" src="{{ p.images.first.image.url }}" alt="">
+    {% else %}
+        <img class="thumb" src="{% static 'portfolio_app/images/project-fallback.jpg' %}" alt="">
+    {% endif %}
+
+    <!-- DESCRIPTION -->
+    <p style="margin-top:10px; opacity:0.8">{{ p.project_des }}</p>
+
+    <!-- IMAGES -->
+    <div class="section">
+        <h4>Images</h4>
+        {% for img in p.images.all %}
+            <img class="thumb" src="{{ img.image.url }}" style="width:140px; height:90px;">
+        {% empty %}
+            <small>No images</small>
+        {% endfor %}
+    </div>
+
+    <!-- FEATURES -->
+    <div class="section">
+        <h4>Features</h4>
+        {% for f in p.features.all %}
+            <div class="tag">{{ f.text }}</div>
+        {% empty %}
+            <small>No features</small>
+        {% endfor %}
+    </div>
+
+    <!-- TECHNOLOGIES USED -->
+    <div class="section">
+        <h4>Technologies</h4>
+        {% for t in p.technologies.all %}
+            <span class="tag">{{ t.name }}</span>
+        {% empty %}
+            <small>No technologies added</small>
+        {% endfor %}
+    </div>
+
+    <!-- ICONS -->
+    <div class="section">
+        <h4>Tech Icons</h4>
+        {% for ic in p.icons.all %}
+            <img class="icon-img" src="{{ ic.icon.url }}" title="{{ ic.tech_name }}">
+        {% empty %}
+            <small>No icons</small>
+        {% endfor %}
+    </div>
+
+
+    <!-- SKILL -->
+    <h1>SKILLS</h1>
+<div class="skill">
+    {% for i in skills %}
+        {{ i.category }}
+        {{ i.name }}
+        <img src="{{ i.icon.url }}" alt="">
+              <div>
+            <a href="{% url 'update_skill' p.id %}" class="btn btn-edit">Update</a>
+            <a href="{% url 'delete_skill' p.id %}" class="btn btn-danger">Delete</a>
+        </div>
+    {% endfor %}
+</div>
+
+.image
+</div>
+{% empty %}
+<p>No projects found.</p>
+{% endfor %}
+
+
+
+<!-- EXPERIENCE Block -->
+<h1 class="Experience"></h1>
+<div>
+    {% for e in exe %}
+        {{ e.compony_name }}
+        {{ e.compony_des }}
+        {{ e.duration }}
+        <a href="{{ e.certificate_ink }}">certificate link</a>
+
+        <div>
+            <a href="{% url 'experience_update' e.id %}" class="btn btn-edit">Update Experience</a>
+            <a href="{% url 'experience_delete' e.id %}" class="btn btn-danger">Delete Experience</a>
+        </div>
+    {% endfor %}
+</div>
+
+
+<!-- Certification  -->
+<h1>Certificate</h1>
+<div>
+    {% for c in cer %}
+    {{ c.certificate_name }}
+    {{ c.link }}
+
+    <div>
+        <a href="{% url 'certification_update' c.id %}" class="btn btn-edit">Update Certificate</a>
+        <a href="{% url 'certification_delete' c.id %}" class="btn btn-danger">Delete Certificate</a>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+<h1>Profile</h1>
+
+{% if pro %}
+    <img src="{{ pro.profile_image.url }}"
+         alt="profile"
+         style="width:140px;height:140px;border-radius:18px;object-fit:cover;">
+
+    <div style="margin-top:15px;">
+        <a href="{% url 'profile_update' pro.id %}" class="btn btn-edit">
+            Update Profile
+        </a>
+    </div>
+{% else %}
+    <p>No profile added yet.</p>
+
+    <div>
+        <a href="{% url 'profile' %}" class="btn btn-danger">
+            Add Profile
+        </a>
+    </div>
+{% endif %}
+
+
+<h1>Resume</h1>
+
+{% if resume %}
+    <!-- Show Update button if resume exists -->
+    <a href="{% url 'resume_update' resume.id %}">
+        <button>Update Resume</button>
+    </a>
+
+    <!-- Optional: view resume button -->
+    <a href="{{ resume.file }}" target="_blank">
+        <button>View Resume</button>
+    </a>
+{% else %}
+    <!-- Show Add button if no resume exists -->
+    <a href="{% url 'resume' %}">
+        <button>Add Resume</button>
+    </a>
+{% endif %}
+
+
+
+</body>
+</html>

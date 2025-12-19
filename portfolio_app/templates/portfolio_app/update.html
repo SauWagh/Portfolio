@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Project</title>
+    <style>
+    body {
+        background: #f4f4f4;
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    form {
+        width: 80%;
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+    }
+
+    h3 {
+        margin-top: 25px;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .form-block {
+        padding: 10px;
+        background: #fafafa;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        margin-bottom: 12px;
+    }
+
+    input[type="text"],
+    input[type="file"],
+    textarea,
+    select {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    button[type="button"] {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 7px 14px;
+        background: #007bff;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+    }
+
+    button[type="button"]:hover {
+        background: #0067d6;
+    }
+
+    button[type="submit"] {
+        width: 100%;
+        padding: 12px;
+        margin-top: 20px;
+        background: #28a745;
+        color: white;
+        border: none;
+        font-size: 16px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+        background: #218838;
+    }
+</style>
+
+</head>
+<body>
+
+<h2>Edit Project</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <h3>Main Project Details</h3>
+    {{ pro_form.as_p }}
+
+
+    <!-- ==================== IMAGES ==================== -->
+    <h3>Images</h3>
+    {{ img_formset.management_form }}
+
+    <div id="images-forms">
+        {% for form in img_formset %}
+            <div class="form-block">
+                {{ form.as_p }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div id="images-empty-form" style="display:none;">
+        {{ img_formset.empty_form.as_p }}
+    </div>
+
+    <button type="button" onclick="addForm('images')">Add More Image</button>
+
+
+    <!-- ==================== FEATURES ==================== -->
+    <h3>Features</h3>
+    {{ fea_formset.management_form }}
+
+    <div id="features-forms">
+        {% for form in fea_formset %}
+            <div class="form-block">
+                {{ form.as_p }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div id="features-empty-form" style="display:none;">
+        {{ fea_formset.empty_form.as_p }}
+    </div>
+
+    <button type="button" onclick="addForm('features')">Add More Feature</button>
+
+
+    <!-- ==================== TECH ICONS ==================== -->
+    <h3>Tech Icons</h3>
+    {{ icon_formset.management_form }}
+
+    <div id="icons-forms">
+        {% for form in icon_formset %}
+            <div class="form-block">
+                {{ form.as_p }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div id="icons-empty-form" style="display:none;">
+        {{ icon_formset.empty_form.as_p }}
+    </div>
+
+    <button type="button" onclick="addForm('icons')">Add More Icon</button>
+
+
+    <!-- ==================== TECHNOLOGIES USED ==================== -->
+    <h3>Technologies Used</h3>
+    {{ tech_formset.management_form }}
+
+    <div id="tech-forms">
+        {% for form in tech_formset %}
+            <div class="form-block">
+                {{ form.as_p }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div id="tech-empty-form" style="display:none;">
+        {{ tech_formset.empty_form.as_p }}
+    </div>
+
+    <button type="button" onclick="addForm('tech')">Add More Technology</button>
+
+
+    <br><br>
+    <button type="submit">Save Changes</button>
+
+</form>
+
+
+
+<!-- ============================================================= -->
+<!-- UNIVERSAL JAVASCRIPT FOR ALL FORMSETS -->
+<!-- ============================================================= -->
+<script>
+function addForm(prefix) {
+
+    // gets <input name="images-TOTAL_FORMS">
+    let totalForms = document.querySelector(`input[name="${prefix}-TOTAL_FORMS"]`);
+    let currentCount = parseInt(totalForms.value);
+
+    let emptyFormHTML = document.getElementById(`${prefix}-empty-form`).innerHTML;
+
+    // Replace __prefix__ with actual number
+    let newForm = emptyFormHTML.replace(/__prefix__/g, currentCount);
+
+    // append to container
+    document.getElementById(`${prefix}-forms`).insertAdjacentHTML("beforeend", newForm);
+
+    // increase total form count
+    totalForms.value = currentCount + 1;
+}
+</script>
+
+</body>
+</html>

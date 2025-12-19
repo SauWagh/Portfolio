@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'portfolio_app/css/detail.css' %}">
+    <title>{{ pro.project_title }} | Project Details</title>
+</head>
+<body>
+<div class="container">
+    <h1>{{ pro.project_title }}</h1>
+
+<div class="top-media-container">
+    {% if pro.project_video %}
+        <video id="mainMedia" class="project-media" controls>
+            <source src="{{ pro.project_video.url }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    {% elif pro.images.first %}
+        <img id="mainMedia" src="{{ pro.images.first.image.url }}" class="project-media">
+    {% else %}
+        <img id="mainMedia" src="{% static 'portfolio_app/images/project-fallback.jpg' %}" class="project-media">
+    {% endif %}
+</div>
+
+{% if pro.project_video or pro.images.all %}
+<div class="section">
+    <h2>Gallery</h2>
+    <div class="slider">
+        {% if pro.project_video %}
+            <video class="thumb" onclick="changeMainMedia('{{ pro.project_video.url }}', 'video')" muted>
+                <source src="{{ pro.project_video.url }}" type="video/mp4">
+            </video>
+        {% endif %}
+
+        {% for img in pro.images.all %}
+            <img class="thumb" src="{{ img.image.url }}" alt="Project Image"
+                 onclick="changeMainMedia('{{ img.image.url }}', 'image')">
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+
+
+
+    <!-- Description -->
+    <div class="section">
+        <h2>Description</h2>
+        <p>{{ pro.project_des }}</p>
+    </div>
+
+    <!-- Features -->
+    <div class="section">
+        <h2>Features</h2>
+        <ul>
+            {% for feature in pro.features.all %}
+                <li>{{ feature.text }}</li>
+            {% empty %}
+                <li>No features added.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Tech Icons -->
+    <div class="section">
+        <h2>Tech Icons</h2>
+        <div class="tech-icons">
+            {% for icon in pro.icons.all %}
+                {% if icon.icon %}
+                    <img src="{{ icon.icon.url }}" alt="{{ icon.tech_name }}" title="{{ icon.tech_name }}">
+                {% else %}
+                    <span>{{ icon.tech_name }}</span>
+                {% endif %}
+            {% empty %}
+                <p>No tech icons added.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Technologies Used -->
+    <div class="section">
+        <h2>Technologies Used</h2>
+        <ul>
+            {% for tech in pro.technologies.all %}
+                <li>{{ tech.name }}</li>
+            {% empty %}
+                <li>No technologies added.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Live Demo Button -->
+    {% if pro.live_demo %}
+        <a href="{{ pro.live_demo }}" class="demo-btn" target="_blank">🔗 View Live Demo</a>
+        <a href="{{ pro.github_link }}" class="demo-btn" target="_blank"> GitHub</a>
+    {% endif %}
+
+  <script src="{% static 'portfolio_app/js/detail.js' %}"></script>
+</body>
+</html>
