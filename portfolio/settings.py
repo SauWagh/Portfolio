@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")  # no fallback in production
-DEBUG = os.getenv("DEBUG") == "FALSE"
+DEBUG = os.getenv("DEBUG","False") == "True"
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -34,17 +34,8 @@ DEBUG = os.getenv("DEBUG") == "FALSE"
 
 # DEBUG = 'RENDER' not in os.environ  
 
-if DEBUG:
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-else:
-    CLOUDINARY_STORAGE = {
-        'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
-        'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-        'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET')
-    }
-
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 ALLOWED_HOSTS = ['*']
 
@@ -111,13 +102,13 @@ WSGI_APPLICATION = 'portfolio.wsgi.application'
 # }
 
 # Default: local PostgreSQL database
-DEFAULT_DB_URL = "postgres://postgres:0000@localhost:5432/portfolio_db"
+# DEFAULT_DB_URL = "postgres://postgres:0000@localhost:5432/portfolio_db"
 
 DATABASES = {
     "default": dj_database_url.config(
-        default="postgres://postgres:0000@localhost:5432/portfolio_db",
+        default=os.getenv("DATABASE_URL"),
         conn_max_age=600,
-        ssl_require=not DEBUG
+        ssl_require=True
     )
 }
 
