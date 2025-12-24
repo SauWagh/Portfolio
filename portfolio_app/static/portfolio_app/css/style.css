@@ -680,7 +680,7 @@ html,body{
     }
     .hero-right{
       position: relative !important;
-      left: 10% !important;
+      left: 4% !important;
     }
     .resume-box a{
       height: 235px !important;
@@ -689,6 +689,29 @@ html,body{
       width: 50% !important;
       left: 29% !important;
     }
+    .login-box {
+      width: 100% !important;
+      height: 33% !important;
+      top: 44% !important;
+    }
+    .skill-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 12px;
+    max-height: 220px;
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+/* Nice vertical scrollbar */
+.skill-grid::-webkit-scrollbar {
+    width: 6px;
+}
+
+.skill-grid::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
 }
 /* Login Button */
 .login-btn {

@@ -151,3 +151,25 @@
 .slider img.thumb:hover, .slider video.thumb:hover {
     transform: scale(1.1);
 }
+@media (max-width: 768px) {
+    .tech-icons {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 12px;
+
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        padding-bottom: 6px;
+        scroll-behavior: smooth;
+    }
+
+    .tech-icons::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    .tech-icons::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+    }
+}

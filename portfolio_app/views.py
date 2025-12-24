@@ -101,7 +101,8 @@ def dashboard(request):
         'skills' : skills,
         'exe' : exe,
         'cer' :cer,
-        'pro' : pro
+        'pro' : pro,
+        'resume' : resume,
     })
 
 
