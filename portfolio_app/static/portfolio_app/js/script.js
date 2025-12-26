@@ -1,50 +1,85 @@
-const DOT_COUNT = 16;
-const dots = [];
+const mediaQuery = window.matchMedia("(max-width: 768px)");
 
-// create dots
-for (let i = 0; i < DOT_COUNT; i++) {
-  const el = document.createElement('div');
-  el.className = 'dot';
+let animationRunning = false;
+let dots = [];
+let animationId = null;
 
-  // Glass color (single)
-  el.style.background = `linear-gradient(135deg,rgba(255,255,255,0.35),rgba(255,255,255,0.1))`;
-  el.style.backdropFilter = 'blur(8px)';
-  el.style.webkitBackdropFilter = 'blur(8px)';
-  el.style.border = '1px solid rgba(255, 255, 255, 0.35)';
-  el.style.boxShadow = `0 0 12px rgba(255,255,255,0.45),inset 0 0 6px rgba(255,255,255,0.25)`;
+function startAnimation() {
+  if (animationRunning) return;
+  animationRunning = true;
 
+  const DOT_COUNT = 16;
 
-  el.style.left = (window.innerWidth / 2) + 'px';
-  el.style.top = (window.innerHeight / 2) + 'px';
-  el.style.opacity = (1 - i / DOT_COUNT);
-  el.style.width = (10 + (i % 3)) + 'px';
-  el.style.height = el.style.width;
-  el.style.borderRadius = '50%';
+  for (let i = 0; i < DOT_COUNT; i++) {
+    const el = document.createElement("div");
+    el.className = "dot";
 
-  document.body.appendChild(el);
-  dots.push({ el, x: window.innerWidth / 2, y: window.innerHeight / 2 });
-}
+    el.style.background =
+      "linear-gradient(135deg,rgba(255,255,255,0.35),rgba(255,255,255,0.1))";
+    el.style.backdropFilter = "blur(8px)";
+    el.style.border = "1px solid rgba(255,255,255,0.35)";
+    el.style.boxShadow =
+      "0 0 12px rgba(255,255,255,0.45), inset 0 0 6px rgba(255,255,255,0.25)";
 
+    el.style.width = "12px";
+    el.style.height = "12px";
+    el.style.borderRadius = "50%";
+    el.style.position = "fixed";
 
-let mouseX = window.innerWidth/2, mouseY = window.innerHeight/2;
-window.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-});
+    document.body.appendChild(el);
+    dots.push({ el, x: innerWidth / 2, y: innerHeight / 2 });
+  }
 
-function animate(){
-  let prevX = mouseX, prevY = mouseY;
-  dots.forEach((d, idx) => {
-    d.x += (prevX - d.x) * (0.18 + idx*0.01);
-    d.y += (prevY - d.y) * (0.18 + idx*0.01);
-    d.el.style.left = d.x + 'px';
-    d.el.style.top = d.y + 'px';
-    d.el.style.opacity = Math.max(0, 1 - (idx / DOT_COUNT) * 1.1);
-    prevX = d.x; prevY = d.y;
+  let mouseX = innerWidth / 2,
+    mouseY = innerHeight / 2;
+
+  window.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
   });
-  requestAnimationFrame(animate);
+
+  function animate() {
+    let prevX = mouseX,
+      prevY = mouseY;
+
+    dots.forEach((d, i) => {
+      d.x += (prevX - d.x) * (0.18 + i * 0.01);
+      d.y += (prevY - d.y) * (0.18 + i * 0.01);
+      d.el.style.left = d.x + "px";
+      d.el.style.top = d.y + "px";
+      prevX = d.x;
+      prevY = d.y;
+    });
+
+    animationId = requestAnimationFrame(animate);
+  }
+
+  animate();
 }
-animate();
+
+function stopAnimation() {
+  animationRunning = false;
+  cancelAnimationFrame(animationId);
+
+  dots.forEach((d) => d.el.remove());
+  dots = [];
+}
+
+// Initial check
+if (!mediaQuery.matches) {
+  startAnimation();
+}
+
+// Listen for screen size change
+mediaQuery.addEventListener("change", (e) => {
+  if (e.matches) {
+    // Mobile
+    stopAnimation();
+  } else {
+    // Desktop
+    startAnimation();
+  }
+});
 
 
 document.addEventListener("DOMContentLoaded", function () {
