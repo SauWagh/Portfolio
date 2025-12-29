@@ -34,8 +34,6 @@ DEBUG = os.getenv("DEBUG", "True") == "True"
 
 # DEBUG = 'RENDER' not in os.environ  
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
 
 ALLOWED_HOSTS = ['*']
 
@@ -45,7 +43,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'cloudinary',
     'cloudinary_storage',
-    
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
