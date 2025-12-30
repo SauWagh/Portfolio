@@ -36,7 +36,7 @@ DEBUG = os.getenv("DEBUG", "True") == "True"
 
 MEDIA_URL = '/media/'
 
-ALLOWED_HOSTS = ['portfolio_app.onrender.com','localhost','127.0.0.1',]
+ALLOWED_HOSTS = ['portfolio_app.onrender.com','localhost','127.0.0.1']
 
 
 # Application definition
