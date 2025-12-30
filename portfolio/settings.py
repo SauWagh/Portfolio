@@ -36,7 +36,16 @@ DEBUG = os.getenv("DEBUG", "True") == "True"
 
 MEDIA_URL = '/media/'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'portfolio-djez.onrender.com',
+    'localhost',
+    '127.0.0.1',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://portfolio-djez.onrender.com',
+]
+
 
 
 # Application definition
