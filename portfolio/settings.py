@@ -34,8 +34,9 @@ DEBUG = os.getenv("DEBUG", "True") == "True"
 
 # DEBUG = 'RENDER' not in os.environ  
 
+MEDIA_URL = '/media/'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['portfolio.onrender.com','localhost','127.0.0.1',]
 
 
 # Application definition
@@ -156,7 +157,15 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'portfolio_app' / 'static']
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
