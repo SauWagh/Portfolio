@@ -343,7 +343,7 @@ def profile_update(request,id):
     if form.is_valid():
         form.save()
         return redirect('home')
-    return render(request, 'portfolio_app/update_profile.html',{'form':form,'profile':profile_update})
+    return render(request, 'portfolio_app/update_profile.html',{'form':form,'profile':profile})
 
 
 def add_resume(request):
