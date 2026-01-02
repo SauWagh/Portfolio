@@ -330,11 +330,11 @@ def send_email(request):
 def profile_view(request):
     if request.method == 'POST':
         pro_form = ProfileForm(request.POST, request.FILES)
-        if form.is_valid():
+        if pro_form.is_valid():
             pro_form.save()
             return redirect('home')
     else:
-        form = ProfileForm()
+        pro_form = ProfileForm()
     return render(request, 'portfolio_app/profile.html',{'pro_form':pro_form})
 
 def profile_update(request,id):
