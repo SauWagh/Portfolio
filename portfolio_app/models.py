@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from cloudinary.models import CloudinaryField
 
 class Project(models.Model):
 
@@ -87,7 +88,8 @@ class Certificate (models.Model):
 
 class Profile(models.Model):
     name = models.CharField(max_length=100)
-    profile_image = models.ImageField(upload_to='profile_images/')
+    # profile_image = models.ImageField(upload_to='profile_images/')
+    profile_image = CloudinaryField('image')
 
     def __str__(self):
         return self.name
