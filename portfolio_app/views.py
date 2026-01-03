@@ -328,13 +328,14 @@ def send_email(request):
 
 
 def profile_view(request):
+    profile = Profile.objects.first()
     if request.method == 'POST':
-        pro_form = ProfileForm(request.POST, request.FILES)
+        pro_form = ProfileForm(request.POST, request.FILES, instance=profile)
         if pro_form.is_valid():
             pro_form.save()
             return redirect('home')
     else:
-        pro_form = ProfileForm()
+        pro_form = ProfileForm(instance=profile)
     return render(request, 'portfolio_app/profile.html',{'pro_form':pro_form})
 
 def profile_update(request,id):
