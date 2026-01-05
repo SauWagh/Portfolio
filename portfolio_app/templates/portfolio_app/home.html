@@ -204,7 +204,7 @@
     <div class="skill-grid">
       {% for s in languages %}
       <div class="skill-card">
-        <img src="{{ s.icon.url|default:'static/default-icons/default.png' }}" alt="{{ s.name }}">
+        <img src="{{ s.icon.url }}" alt="{{ s.name }}">
         <span class="popup-text"><p>{{ s.name }}</p></span>
       </div>
       {% endfor %}
@@ -215,7 +215,7 @@
     <div class="skill-grid">
       {% for s in frameworks %}
       <div class="skill-card">
-        <img src="{{ s.icon.url|default:'static/default-icons/default.png' }}" alt="{{ s.name }}">
+        <img src="{{ s.icon.url }}" alt="{{ s.name }}">
         <span class="popup-text"><p>{{ s.name }}</p></span>
       </div>
       {% endfor %}
@@ -226,7 +226,7 @@
     <div class="skill-grid">
       {% for s in frontend %}
       <div class="skill-card">
-        <img src="{{ s.icon.url|default:'static/default-icons/default.png' }}" alt="{{ s.name }}">
+        <img src="{{ s.icon.url }}" alt="{{ s.name }}">
         <span class="popup-text"><p>{{ s.name }}</p></span>
       </div>
       {% endfor %}
@@ -237,7 +237,7 @@
     <div class="skill-grid">
       {% for s in backend %}
       <div class="skill-card">
-        <img src="{{ s.icon.url|default:'static/default-icons/default.png' }}" alt="{{ s.name }}">
+        <img src="{{ s.icon.url }}" alt="{{ s.name }}">
         <span class="popup-text"><p>{{ s.name }}</p></span>
       </div>
       {% endfor %}
@@ -248,7 +248,7 @@
     <div class="skill-grid">
       {% for s in databases %}
       <div class="skill-card">
-        <img src="{{ s.icon.url|default:'static/default-icons/default.png' }}" alt="{{ s.name }}">
+        <img src="{{ s.icon.url }}" alt="{{ s.name }}">
         <span class="popup-text"><p>{{ s.name }}</p></span>
       </div>
       {% endfor %}
@@ -270,7 +270,7 @@
     <div class="skill-grid">
       {% for s in tools %}
       <div class="skill-card">
-        <img src="{{ s.icon.url|default:'static/default-icons/default.png' }}" alt="{{ s.name }}">
+        <img src="{{ s.icon.url }}" alt="{{ s.name }}">
         <span class="popup-text"><p>{{ s.name }}</p></span>
       </div>
       {% endfor %}
