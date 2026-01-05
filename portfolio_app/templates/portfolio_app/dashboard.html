@@ -112,6 +112,7 @@
         <a href="{% url 'skill' %}" class="btn">Add Skill</a>
         <a href="{% url 'add_exp' %}" class="btn">Add Experience</a>
         <a href="{% url 'add_cer' %}" class="btn">Add Certificate</a>
+        <a href="{% url 'resume' %}" class="btn">Add Resume</a>
         <a href="{% url 'home' %}" class="btn">Home</a>
     </div>
 
@@ -153,6 +154,92 @@
             </div>
         </section>
     {% endfor %}
+
+
+
+<h2>Skills ({{ skills|length }})</h2>
+
+<div class="card-grid" style="display: flex; flex-wrap: wrap; gap: 10px;">
+{% for s in skills %}
+<section class="card small-card">
+    <div class="card-header">
+        <img src="{{ s.icon.url }}" alt="">
+        <h4>{{ s.name }}</h4>
+        <div>
+            <a href="{% url 'update_skill' s.id %}" class="btn btn-edit">Edit</a>
+            <a href="{% url 'delete_skill' s.id %}" class="btn btn-danger"
+               onclick="return confirm('Delete this skill?')">
+               Delete
+            </a>
+        </div>
+    </div>
+
+    {% if s.image %}
+        <img src="{{ s.image.url }}" class="icon">
+    {% endif %}
+</section>
+{% endfor %}
+</div>
+
+
+    <h2>Resume</h2>
+
+{% if resume %}
+<section class="card">
+    <div class="card-header">
+        <h3>My Resume</h3>
+        <div>
+            <a href="{% url 'resume_update' %}" class="btn btn-edit">Edit</a>
+        </div>
+    </div>
+<a href="{% url 'resume' %}" class="btn">Add Resume</a>
+        View Resume
+    </a>
+</section>
+{% endif %}
+
+<h2>Certifications ({{ cer|length }})</h2>
+
+{% for c in cer %}
+<section class="card">
+    <div class="card-header">
+        <h3>{{ c.certificate_name }}</h3>
+        <div>
+            <a href="{% url 'certification_update' c.id %}" class="btn btn-edit">Edit</a>
+            <a href="{% url 'certification_delete' c.id %}" class="btn btn-danger"
+               onclick="return confirm('Delete this certificate?')">
+               Delete
+            </a>
+        </div>
+    </div>
+
+    {% if c.image %}
+        <img src="{{ c.image.url }}" class="media">
+    {% endif %}
+
+    <p class="text-muted">{{ c.description }}</p>
+</section>
+{% endfor %}
+
+<h2>Experience ({{ exe|length }})</h2>
+
+{% for e in exe %}
+<section class="card">
+    <div class="card-header">
+        <h3>{{ e.compony_name }}</h3>
+        <p>{{ e.compony_des }}</p>
+        <p>{{ e.duration }}</p>
+        <div>
+            <a href="{% url 'experience_update' e.id %}" class="btn btn-edit">Edit</a>
+            <a href="{% url 'experience_delete' e.id %}" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+
+    <p><strong>{{ e.company }}</strong></p>
+    <p class="text-muted">{{ e.description }}</p>
+</section>
+{% endfor %}
+
 
 </div>
 </body>

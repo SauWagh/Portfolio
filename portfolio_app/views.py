@@ -12,18 +12,34 @@ from django.conf import settings
 # Create your views here.
 def home(request):
     projects= Project.objects.all().order_by('id')
-    skills = Skill.objects.all().order_by('id')
+
+    skills = Skill.objects.all()
+    languages = skills.filter(category='languages')
+    frameworks = skills.filter(category='frameworks')
+    frontend = skills.filter(category='frontend')
+    backend = skills.filter(category='backend')
+    databases = skills.filter(category='databases')
+    ml_ds = skills.filter(category='ml_ds')
+    tools = skills.filter(category='tools')
+
     exe = Experience.objects.all().order_by('id')
     cer = Certificate.objects.all().order_by('id')
     pro = Profile.objects.first()
     resume = Resume.objects.first()
     return render(request,'portfolio_app/home.html',{
-        'projects' : projects,
-        'skills' : skills,
-        'exe':exe,
-        'cer' :cer,
-        'pro':pro,
-        'resume':resume,
+          'projects': projects,
+        'languages': languages,
+        'frameworks': frameworks,
+        'frontend': frontend,
+        'backend': backend,
+        'databases': databases,
+        'ml_ds': ml_ds,
+        'tools': tools,
+        'exe': exe,
+        'cer': cer,
+        'pro': pro,
+        'resume': resume,
+
         })
 
 def project_detail(request, id):

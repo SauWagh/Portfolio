@@ -58,7 +58,7 @@ class Skill(models.Model):
         ('frontend','Frontend Technologies'),
         ('backend','backend Technologies'),
         ('databases','Databases'),
-        ('ml/ds', 'ML/Data Science'),                       
+        ('ml_ds', 'ML/Data Science'),                       
         ('cloud', 'Cloud/DevOps'),       
         ('tools','Tools')         
     ]

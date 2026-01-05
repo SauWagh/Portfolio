@@ -193,37 +193,92 @@
   <button class="tab-button" data-category="frontend">Frontend Technologies</button>
   <button class="tab-button" data-category="backend">backend Technologies</button>
   <button class="tab-button" data-category="databases">Databases</button>
-  <button class="tab-button" data-category="ml/ds">ML/Data Science</button>
+  <button class="tab-button" data-category="ml_ds">ML/Data Science</button>
   <!-- <button class="tab-button" data-category="cloud">Cloud/DevOps</button> -->
   <button class="tab-button" data-category="tools">Tools</button>
 </div>
 
-{% regroup skills by category as groups %}
-
 <div class="skills-panels">
-  {% for g in groups %}
-  <div class="panel {% if g.grouper == 'languages' %}active{% endif %}" data-panel="{{ g.grouper }}">
+
+  <div class="panel active" data-panel="languages">
     <div class="skill-grid">
-      {% for s in g.list %}
+      {% for s in languages %}
       <div class="skill-card">
-        {% if s.icon %}
-
-            <img src="{{ s.icon.url }}" alt="{{ s.name }}">
-            <span class="popup-text"><p>{{ s.name }}</p></span>
-
-        {% else %}
-
-            <img src="{% static 'default-icons/default.png' %}" alt="{{ s.name }}">
-            <span class="popup-text"><p>{{ s.name }}</p></span>
-
-        {% endif %}
-
+        <img src="{{ s.icon.url|default:'static/default-icons/default.png' }}" alt="{{ s.name }}">
+        <span class="popup-text"><p>{{ s.name }}</p></span>
       </div>
       {% endfor %}
     </div>
   </div>
-  {% endfor %}
+
+  <div class="panel" data-panel="frameworks">
+    <div class="skill-grid">
+      {% for s in frameworks %}
+      <div class="skill-card">
+        <img src="{{ s.icon.url|default:'static/default-icons/default.png' }}" alt="{{ s.name }}">
+        <span class="popup-text"><p>{{ s.name }}</p></span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="panel" data-panel="frontend">
+    <div class="skill-grid">
+      {% for s in frontend %}
+      <div class="skill-card">
+        <img src="{{ s.icon.url|default:'static/default-icons/default.png' }}" alt="{{ s.name }}">
+        <span class="popup-text"><p>{{ s.name }}</p></span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="panel" data-panel="backend">
+    <div class="skill-grid">
+      {% for s in backend %}
+      <div class="skill-card">
+        <img src="{{ s.icon.url|default:'static/default-icons/default.png' }}" alt="{{ s.name }}">
+        <span class="popup-text"><p>{{ s.name }}</p></span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="panel" data-panel="databases">
+    <div class="skill-grid">
+      {% for s in databases %}
+      <div class="skill-card">
+        <img src="{{ s.icon.url|default:'static/default-icons/default.png' }}" alt="{{ s.name }}">
+        <span class="popup-text"><p>{{ s.name }}</p></span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="panel" data-panel="ml_ds">
+    <div class="skill-grid">
+      {% for s in ml_ds %}
+      <div class="skill-card">
+        <img src="{{ s.icon.url|default:'static/default-icons/default.png' }}" alt="{{ s.name }}">
+        <span class="popup-text"><p>{{ s.name }}</p></span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="panel" data-panel="tools">
+    <div class="skill-grid">
+      {% for s in tools %}
+      <div class="skill-card">
+        <img src="{{ s.icon.url|default:'static/default-icons/default.png' }}" alt="{{ s.name }}">
+        <span class="popup-text"><p>{{ s.name }}</p></span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
 </div>
+
 
 </section>
 
