@@ -259,7 +259,7 @@
     <div class="skill-grid">
       {% for s in ml_ds %}
       <div class="skill-card">
-        <img src="{{ s.icon.url|default:'static/default-icons/default.png' }}" alt="{{ s.name }}">
+        <img src="{{ s.icon.url }}" alt="{{ s.name }}">
         <span class="popup-text"><p>{{ s.name }}</p></span>
       </div>
       {% endfor %}
