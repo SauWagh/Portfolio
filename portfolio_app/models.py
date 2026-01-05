@@ -12,7 +12,8 @@ class Project(models.Model):
     
 
     project_title = models.CharField('Project Name', max_length=100)
-    project_video = models.FileField('Project Video',upload_to = "portfolio_app/videos", validators = [validator_video],blank=True, null=True)
+    # project_video = models.FileField('Project Video',upload_to = "portfolio_app/videos", validators = [validator_video],blank=True, null=True)
+    project_video = CloudinaryField('video',resource_type='video',blank=True,null=True)
     project_des = models.TextField('Project Description')
     live_demo = models.URLField(blank=True, null=True)
     github_link = models.URLField(blank=True, null=True)
