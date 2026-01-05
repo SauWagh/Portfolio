@@ -162,7 +162,13 @@
 {% for s in skills %}
 <section class="card small-card">
     <div class="card-header">
-        <img src="{{ s.icon.url }}" alt="" style="height: 50px;">
+        {% if s.icon %}
+  <img src="{{ s.icon.url }}" alt="{{ s.name }}" style="height: 50px;">
+{% else %}
+  <img src="{% static 'default-icons/default.png' %}" alt="{{ s.name }}" style="height: 50px;">
+{% endif %}
+
+        
         <h4>{{ s.name }}</h4>
         <div>
             <a href="{% url 'update_skill' s.id %}" class="btn btn-edit">Edit</a>
