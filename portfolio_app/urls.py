@@ -27,7 +27,7 @@ urlpatterns = [
     path('profile/<int:id>/update/',profile_update, name='profile_update'),
 
     path('resume/',add_resume,name='resume'),
-    path('resume/update/<int:id>/', update_resume, name='resume_update'), 
+    path('resume/update/', update_resume, name='resume_update'), 
 
     path('send_email/', send_email, name='send_email'),
 
