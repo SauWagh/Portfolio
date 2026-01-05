@@ -45,7 +45,7 @@ class TechIcon(models.Model):
 
 class TechUsed(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='technologies')
-    name = models.CharField('Technology Used', max_length=50)
+    name = models.CharField('Technology Used', max_length=150)
 
     def __str__(self):
         return self.name
