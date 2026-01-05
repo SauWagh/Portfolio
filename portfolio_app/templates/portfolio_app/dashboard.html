@@ -154,6 +154,94 @@
         </section>
     {% endfor %}
 
+    
+<h2>Skills ({{ skills|length }})</h2>
+
+<div class="card-grid">
+{% for s in skills %}
+<section class="card small-card">
+    <div class="card-header">
+        <h4>{{ s.name }}</h4>
+        <div>
+            <a href="{% url 'update_skill' s.id %}" class="btn btn-edit">Edit</a>
+            <a href="{% url 'delete_skill' s.id %}" class="btn btn-danger"
+               onclick="return confirm('Delete this skill?')">
+               Delete
+            </a>
+        </div>
+    </div>
+
+    {% if s.image %}
+        <img src="{{ s.image.url }}" class="icon">
+    {% endif %}
+</section>
+{% endfor %}
+</div>
+
+
+    <h2>Resume</h2>
+
+{% if resume %}
+<section class="card">
+    <div class="card-header">
+        <h3>My Resume</h3>
+        <div>
+            <a href="{% url 'update_resume' %}" class="btn btn-edit">Edit</a>
+        </div>
+    </div>
+
+    <a href="{{ resume.file.url }}" target="_blank" class="btn">
+        View Resume
+    </a>
+</section>
+{% else %}
+<a href="{% url 'add_resume' %}" class="btn">Add Resume</a>
+{% endif %}
+
+<h2>Certifications ({{ cer|length }})</h2>
+
+{% for c in cer %}
+<section class="card">
+    <div class="card-header">
+        <h3>{{ c.title }}</h3>
+        <div>
+            <a href="{% url 'update_cer' c.id %}" class="btn btn-edit">Edit</a>
+            <a href="{% url 'delete_cer' c.id %}" class="btn btn-danger"
+               onclick="return confirm('Delete this certificate?')">
+               Delete
+            </a>
+        </div>
+    </div>
+
+    {% if c.image %}
+        <img src="{{ c.image.url }}" class="media">
+    {% endif %}
+
+    <p class="text-muted">{{ c.description }}</p>
+</section>
+{% endfor %}
+
+<h2>Experience ({{ exe|length }})</h2>
+
+{% for e in exe %}
+<section class="card">
+    <div class="card-header">
+        <h3>{{ e.role }}</h3>
+        <div>
+            <a href="{% url 'update_exe' e.id %}" class="btn btn-edit">Edit</a>
+            <a href="{% url 'delete_exp' e.id %}" class="btn btn-danger"
+               onclick="return confirm('Delete this experience?')">
+               Delete
+            </a>
+        </div>
+    </div>
+
+    <p><strong>{{ e.company }}</strong></p>
+    <p class="text-muted">{{ e.description }}</p>
+</section>
+{% endfor %}
+
+
 </div>
 </body>
 
