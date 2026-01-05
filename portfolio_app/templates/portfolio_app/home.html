@@ -204,7 +204,11 @@
     <div class="skill-grid">
       {% for s in languages %}
       <div class="skill-card">
-        <img src="{{ s.icon.url }}" alt="{{ s.name }}">
+        {% if s.icon %}
+  <img src="{{ s.icon.url }}" alt="{{ s.name }}">
+{% else %}
+  <img src="{% static 'default-icons/default.png' %}" alt="{{ s.name }}">
+{% endif %}
         <span class="popup-text"><p>{{ s.name }}</p></span>
       </div>
       {% endfor %}
@@ -215,7 +219,11 @@
     <div class="skill-grid">
       {% for s in frameworks %}
       <div class="skill-card">
-        <img src="{{ s.icon.url }}" alt="{{ s.name }}">
+        {% if s.icon %}
+  <img src="{{ s.icon.url }}" alt="{{ s.name }}">
+{% else %}
+  <img src="{% static 'default-icons/default.png' %}" alt="{{ s.name }}">
+{% endif %}
         <span class="popup-text"><p>{{ s.name }}</p></span>
       </div>
       {% endfor %}
@@ -226,7 +234,11 @@
     <div class="skill-grid">
       {% for s in frontend %}
       <div class="skill-card">
-        <img src="{{ s.icon.url }}" alt="{{ s.name }}">
+        {% if s.icon %}
+  <img src="{{ s.icon.url }}" alt="{{ s.name }}">
+{% else %}
+  <img src="{% static 'default-icons/default.png' %}" alt="{{ s.name }}">
+{% endif %}
         <span class="popup-text"><p>{{ s.name }}</p></span>
       </div>
       {% endfor %}
@@ -237,7 +249,11 @@
     <div class="skill-grid">
       {% for s in backend %}
       <div class="skill-card">
-        <img src="{{ s.icon.url }}" alt="{{ s.name }}">
+        {% if s.icon %}
+  <img src="{{ s.icon.url }}" alt="{{ s.name }}">
+{% else %}
+  <img src="{% static 'default-icons/default.png' %}" alt="{{ s.name }}">
+{% endif %}
         <span class="popup-text"><p>{{ s.name }}</p></span>
       </div>
       {% endfor %}
@@ -248,7 +264,11 @@
     <div class="skill-grid">
       {% for s in databases %}
       <div class="skill-card">
-        <img src="{{ s.icon.url }}" alt="{{ s.name }}">
+        {% if s.icon %}
+  <img src="{{ s.icon.url }}" alt="{{ s.name }}">
+{% else %}
+  <img src="{% static 'default-icons/default.png' %}" alt="{{ s.name }}">
+{% endif %}
         <span class="popup-text"><p>{{ s.name }}</p></span>
       </div>
       {% endfor %}
@@ -259,7 +279,11 @@
     <div class="skill-grid">
       {% for s in ml_ds %}
       <div class="skill-card">
-        <img src="{{ s.icon.url }}" alt="{{ s.name }}">
+        {% if s.icon %}
+  <img src="{{ s.icon.url }}" alt="{{ s.name }}">
+{% else %}
+  <img src="{% static 'default-icons/default.png' %}" alt="{{ s.name }}">
+{% endif %}
         <span class="popup-text"><p>{{ s.name }}</p></span>
       </div>
       {% endfor %}
@@ -270,7 +294,11 @@
     <div class="skill-grid">
       {% for s in tools %}
       <div class="skill-card">
-        <img src="{{ s.icon.url }}" alt="{{ s.name }}">
+        {% if s.icon %}
+  <img src="{{ s.icon.url }}" alt="{{ s.name }}">
+{% else %}
+  <img src="{% static 'default-icons/default.png' %}" alt="{{ s.name }}">
+{% endif %}
         <span class="popup-text"><p>{{ s.name }}</p></span>
       </div>
       {% endfor %}
